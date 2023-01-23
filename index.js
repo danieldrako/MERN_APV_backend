@@ -1,16 +1,19 @@
 import express, { request }  from "express";
+import dotenv from "dotenv";
 import conectarDB from "./config/db.js";
 
 const app = express();
+dotenv.config();
 
-conectarDB()
+conectarDB();
 
 app.use('/', (req, res) => {
     res.send("Hola mundo")
 });
 
+const PORT = process.env.PORT || 4000
 
-app.listen(4000, () => { 
-    console.log("Servidor funcionando en le puerto 4000")
+app.listen(PORT, () => { 
+    console.log(`Servidor funcionando en le puerto ${PORT}`)
  })
 
