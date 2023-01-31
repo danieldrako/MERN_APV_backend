@@ -44,8 +44,12 @@ const perfil =  (req,res) => {
     } catch (error) {
         console.log(error)
     }
+ };
 
-
+ const autenticar = (req,res) => {
+    console.log(req.body);
+    
+    res.json({msg: "Autenticando"})
  }
 
- export {registrar, perfil, confirmar }; 
+ export {registrar, perfil, confirmar, autenticar }; 
