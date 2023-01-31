@@ -46,10 +46,17 @@ const perfil =  (req,res) => {
     }
  };
 
- const autenticar = (req,res) => {
-    console.log(req.body);
-    
-    res.json({msg: "Autenticando"})
- }
+ const autenticar = async (req,res) => {
+    const { email } = req.body
+
+    //?Comprobar si el usuario existe
+    const usuario = await Veterinario.findOne({email})
+    if(!usuario) {
+        const error = new Error('El usuario no existe');
+        return res.status(403).json({msg:error.message});
+    }
+
+    //? Comprobar si el usuario esta confirmado o no 
+ };
 
  export {registrar, perfil, confirmar, autenticar }; 
