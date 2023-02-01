@@ -5,11 +5,13 @@ import {
     perfil,
     confirmar,
     autenticar
-} from '../controllers/veterinarioController.js'
+} from '../controllers/veterinarioController.js';
+import checkAuth from '../middleware/authMiddleware.js';
 
 router.post('/', registrar);
-router.get('/perfil', perfil);
 router.get('/confirmar/:token', confirmar);
 router.post('/login', autenticar);
+
+router.get( '/perfil', checkAuth,  perfil );
 
 export default router;
