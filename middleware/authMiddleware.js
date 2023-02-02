@@ -16,7 +16,7 @@ const checkAuth = async( req,res,next ) => {
                 return next();
             } catch (error) {
                 const e = new Error('Token no valido')
-                res.status(403).json( { msg: e.message })
+                return res.status(403).json( { msg: e.message })
             }
     } 
 
