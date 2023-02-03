@@ -1,7 +1,17 @@
-const agregarPaciente = (req,res) => { second }
-const obtenerPacientes = (req,res) => { second }
+import Paciente from "../models/Paciente.js";
 
-export default { agregarPaciente, obtenerPacientes };
+const agregarPaciente = (req,res) => { 
+    const paciente = new Paciente(req.body)
+    
+    try {
+        
+    } catch (error) {
+        console.log(error)
+    }
+ }
+const obtenerPacientes = (req,res) => {  }
+
+export  { agregarPaciente, obtenerPacientes };
 
 
 

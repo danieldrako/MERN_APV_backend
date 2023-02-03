@@ -1,10 +1,13 @@
 import express from 'express';
 const router = express.Router();
-import {
-    agregarPaciente, 
-    obtenerPaciente
-} from '../controllers/pacienteController.js'
+import { agregarPaciente, obtenerPacientes} from '../controllers/pacienteController.js'
 
-router.route('/').post(agregarPaciente).get(obtenerPaciente);
+router.route('/').post(agregarPaciente).get(obtenerPacientes);
 
 export default router;
+
+
+//import {
+    agregarPaciente, 
+    obtenerPacientes
+//} from '../controllers/pacienteController.js
