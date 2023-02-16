@@ -2,11 +2,12 @@ import Veterinario from "../models/Veterinario.js";
 import generarJWT from "../helpers/generarJWT.js";
 import generarId from "../helpers/generarId.js";
 import emailRegistro from "../helpers/emailRegistro.js";
+import emailOlvidePassword from "../helpers/emailOlvidePassword.js";
 
 const registrar = async (req,res) => { 
     const { email, nombre} = req.body
 
-    // Prevenir usuarios duplicados
+    //* Prevenir usuarios duplicados
     const existeUsuario = await Veterinario.findOne({email})
     if(existeUsuario){
         const error = new Error('Ya existe un usuario registrado con este correo');
@@ -38,26 +39,26 @@ const perfil =  (req,res) => {
     res.json({ perfil: veterinario })
  };
 
- const confirmar = async (req,res) =>{
+ const confirmar = async (req, res) => {
     const { token } = req.params//?para leer datos de la url se usa req.params
 
-    const usuarioConfirmar =  await Veterinario.findOne({token});
+    const usuarioConfirmar = await Veterinario.findOne({ token });
 
-    if(!usuarioConfirmar) {
-        const error = new Error('Token no válido');
-        return res.status(404).json({msg:error.message});
+    if (!usuarioConfirmar) {
+        const error = new Error("Token no válido");
+        return res.status(404).json({ msg: error.message });
     }
     
     try {
         usuarioConfirmar.token = null;
         usuarioConfirmar.confirmado = true;
-        await usuarioConfirmar.save()
+        await usuarioConfirmar.save();
 
-        res.json({msg:'Ususario confirmado correctamente'})
-    } catch (error) {
-        console.log(error)
-    }
- };
+        res.json({ msg: "Usuario Confirmado Correctamente" });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
  const autenticar = async (req,res) => {
     const { email, password } = req.body
@@ -94,6 +95,14 @@ const perfil =  (req,res) => {
     try {
         existeVeterinario.token = generarId()
         await existeVeterinario.save()
+
+        //!ENviar email con intrucciones
+        emailOlvidePassword({
+            email,
+            nombre: existeVeterinario.nombre,
+            token: existeVeterinario.token
+        })
+
         res.json( { msg: "Revisa tu correo para restablecer tu contraseña" })
     } catch (error) {
         console.log(error)
