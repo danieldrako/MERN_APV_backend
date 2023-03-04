@@ -81,7 +81,7 @@ const perfil =  (req,res) => {
             token: generarJWT(usuario.id)
         });
     } else {
-        const error = new Error("El Password es incorrecto");
+        const error = new Error("Contraseña incorrecta");
         return res.status( 403 ).json( { msg:error.message } );
     }    
  };
@@ -140,7 +140,7 @@ const perfil =  (req,res) => {
         veterinario.token = null
         veterinario.password = password
         await veterinario.save()
-        res.json( {msg: 'Password modificada correctamente'} )
+        res.json( {msg: 'Contraseña modificada correctamente'} )
     } catch (error) {
         console.log(error)
     }
